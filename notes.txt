@@ -1,0 +1,14 @@
+Only allow tutors to view list of private questions
+allow students to view public questions and concur
+allow questions to have urgency
+allow tutors to start a request
+allow tutors to finish a request
+record statistcs about all of the requests
+allow students to cancel their own requests
+keep track of which tutors help students
+allow tutors to request teacher help
+****create different classes
+**** create accounts
+---------then you can create a class and get tutor and student codes to allow
+people to sign up for your class
+use a onetoone field speacial user and add model to admin panel

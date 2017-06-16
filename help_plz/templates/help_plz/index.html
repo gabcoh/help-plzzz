@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load rules %}
+{% block content %}
+{% if requests_list %}
+<table class="table">
+    <thead>
+    <tr>
+        <th >
+            Name
+        </th>
+        <th >
+            Subject
+        </th>
+        <th>
+            Concurers
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for request in requests_list %}
+    <tr class=
+    {% if request.started %} 
+        "active"
+    {% elif request.urgency == HelpRequest.HIGH.1 %} 
+    "danger"
+    {% else %}
+       ""
+    {% endif %}
+        >
+        <td >
+            {{ request.creator.username }}
+        </td>
+        <td >
+            {{ request.topic }}
+        </td>
+        <td>
+        {% has_perm 'help_request.can_concur' user request as can_concur %}
+        {% if can_concur %}
+             <a class="btn btn-default" href="{% url 'help_plz:concur' request.pk %}">
+                <span class="glyphicon glyphicon-plus"
+                    aria-hidden="true">
+                </span>
+                Concur
+            {% spaceless %}
+            <span class="badge empty">
+            {% if request.concurers.all %}
+            {{ request.concurers.all | length }}
+            {% endif %}
+            </span>
+            {% endspaceless %}
+            </a>
+        {% endif %}
+        </td>
+        <td >
+        {% has_perm 'help_request.can_mark_started' user request as can_mark_started %}
+        {% has_perm 'help_request.can_mark_done' user request as can_mark_done %}
+        {% if not request.started and can_mark_started %}
+            <a class="btn btn-default" href="{% url 'help_plz:start' request.pk %}">
+                <span class="glyphicon glyphicon-play"
+                    aria-hidden="true"></span> 
+                Start
+            </a>
+        {% elif can_mark_done %}
+            <a class="btn btn-default" href="{% url 'help_plz:finish' request.pk %}">
+                <span class="glyphicon glyphicon-ok"
+                    aria-hidden="true">
+                </span>
+                Finish
+            </a>
+        {% endif %}
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#{{request.pk }}_detail_modal">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Details
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="{{ request.pk }}_detail_modal" tabindex="-1" role="dialog" aria-labelledby="{{ request.pk }}_detail_modal_label">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="{{ request.pk }}_detail_modal_label">Details</h4>
+                  </div>
+                  <div class="modal-body">
+                      {{ request }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        {% has_perm 'help_request.delete_help_request' user request as delete_help_request %}
+        {% if delete_help_request %}
+             <a class="btn btn-default" href="{% url 'help_plz:delete' request.pk %}">
+                <span class="glyphicon glyphicon-remove"
+                    aria-hidden="true">
+                </span>
+                Delete
+            </a>
+        {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <h2 class="text-center">No requests.</h2>
+{% endif %}
+{% has_perm 'class.add_help_request' user klass as add_help_request %}
+{% if add_help_request %}
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_request_modal">
+    Request Help 
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="create_request_modal" tabindex="-1" role="dialog" aria-labelledby="create_request_modal_label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="create_request_modal_label">Request Help</h4>
+      </div>
+      <div class="modal-body">
+
+    <form id="request_help_form" action="{% url 'help_plz:request_help' klass.pk %}" method="POST">
+	{% csrf_token %}
+	<div class="form-group">
+		<label for="topic">Topic you need help with</label>
+		<input type="text" name="topic" class="form-control" id="topic" 
+													   placeholder="Systems of Equations">
+	</div>
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" name="public" checked>Public</input>
+		</label>
+	</div>
+	<div class="form-group">
+        <label for="urgency">Urgency of this request</label>
+        <select id="urgency" name="urgency" selected="" class="form-control">
+            <option> None</option>
+            {% for choice in urgency_choices %}
+            <option> {{choice.0}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="$('#request_help_form').submit()">Make Request</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock content %}

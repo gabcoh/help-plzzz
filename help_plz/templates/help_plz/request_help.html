@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+{% if error_message %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"
+          aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Error: </strong> {{ error_message }}
+</div>
+{% endif %}
+
+<form action="{% url 'help_plz:request_help' %}" method="POST">
+	{% csrf_token %}
+	<div class="form-group">
+		<label for="topic">Topic you need help with</label>
+		<input type="text" name="topic" class="form-control" id="topic" 
+													   placeholder="Systems of Equations">
+	</div>
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" name="public" checked>Public</input>
+		</label>
+	</div>
+	<div class="form-group">
+        <label for="urgency">Urgency of this request</label>
+        <select id="urgency" name="urgency" selected="" class="form-control">
+            <option> None</option>
+            {% for choice in urgency_choices %}
+            <option> {{choice.0}}</option>
+            {% endfor %}
+        </select>
+    </div>
+	<button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endblock content %}

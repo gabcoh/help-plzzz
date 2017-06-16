@@ -1,0 +1,14 @@
+{% if error_message %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"
+          aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Error: </strong> {{ error_message }}
+</div>
+{% endif %}
+
+<form action="{% url 'help_plz:request_help' %}" %} method="POST">
+    {% csrf_token %}
+    <input type="text" name='username' placeholder="username" />
+    <input type="password" name='password' />
+    <input type="submit" value="Make the request" />
+</form>
