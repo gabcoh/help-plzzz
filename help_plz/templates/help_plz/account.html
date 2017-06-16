@@ -48,17 +48,15 @@
                                                   data-target="#classes_teaching">Classes you're teaching
                                                   <span class="badge">{{ user.teaching_set.all|length }}</span>
     </button>
-        </div>
+    </div>
     <ul id="classes_teaching" class="list-group collapse">
         {% if user.teaching_set.all %}
-        <ul>
         {% for klass in user.teaching_set.all %}
         <a class="list-group-item" href={% url 'help_plz:index' klass.pk %}>{{ klass }}</a>
         {% endfor %}
         {% else %}
         <li class="list-group-item"> You aren't teaching any classes</li>
         {% endif %}
-        </ul>
     </ul>
     </div>
     </div>
@@ -71,7 +69,7 @@
         {% endfor %}.
         </ul>
         {% else %}
-        <h3> No recent requests </h3>
+        <h3 class="text-center text-info"> No recent requests </h3>
         {% endif %}
     </div>
 </div>
