@@ -66,9 +66,58 @@
                                     <input type="text" name="join_password"
                                     class="form-control" id="join_password" >
                                 </div>
+
+                                        <div class="form-group">
+                                    <button type="submit" class="btn btn-default btn-block"
+                    onclick="$('#create_class_form').submit()">Join</button>
+                                        </div>
                             </form>
              
                             </div>
+                        </li>
+
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle"
+                                    data-toggle="dropdown" role="button"
+                                                           aria-haspopup="true"
+                                                           aria-expanded="false">Create Class
+                                                           <span class="caret"></span></a>
+                            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                                <form id="create_class_form" action="{% url 'help_plz:create_class' %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="create_class_name">Name of class</label>
+                                        <input type="text" name="create_class_name"
+                                                           class="form-control" id="create_class_name" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="create_student_password">Student Password</label>
+                                        <input type="text" name="create_student_password" class="form-control"
+                                                                                          id="create_student_password" >
+                                    </div>
+                                        <div class="form-group">
+                                            <label for="create_tutor_password">Tutor Password</label>
+                                            <input type="text" name="create_tutor_password" class="form-control"
+                                                                                            id="create_tutor_password" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="create_teacher_password">Teacher Password</label>
+                                            <input type="text"
+                                                   name="create_teacher_password"
+                                                   class="form-control"
+                                                   id="create_teacher_password"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                    <button type="submit" class="btn btn-default btn-block"
+                    onclick="$('#create_class_form').submit()">Create</button>
+                                        </div>
+
+
+                                </form>
+                            </div>
+
                         </li>
                             {% endif %}
                     </ul>
