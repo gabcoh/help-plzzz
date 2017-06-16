@@ -35,14 +35,43 @@
                     </button>
                     <a class="navbar-brand" href="#">Help Me Plllz</a>
                 </div>
-                <!--
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                    </ul>
-                </div>
-                -->
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        {% if user.is_authenticated %}
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle"
+                                    data-toggle="dropdown" role="button"
+                                                           aria-haspopup="true"
+                                                           aria-expanded="false">Join Class
+                                                           <span class="caret"></span></a>
+                            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                            <form id="join_class_form" action="{% url 'help_plz:join_class' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="join_name">Name of class</label>
+                                    <input type="text" name="join_name"
+                                    class="form-control" id="join_name" >
+                                </div>
+                                <div class="form-group">
+                                <label for="join_role"> Join class as a</label>
+                                <select id="join_role" name="join_role" selected="" class="form-control">
+                                    <option>Student</option>
+                                    <option>Tutor</option>
+                                    <option>Teacher</option>
+                                </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="join_password">Password</label>
+                                    <input type="text" name="join_password"
+                                    class="form-control" id="join_password" >
+                                </div>
+                            </form>
+             
+                            </div>
+                        </li>
+                            {% endif %}
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if user.is_authenticated %}
                         <li><p class="navbar-text">Signed in as <a href="{% url 'help_plz:account' %}">{{ user }}</a><p></li>
@@ -52,8 +81,11 @@
                         {% else %}
                         <li><a href="{% url 'create_user' %}">Create
                                 account</a></li>
+                        <li class="divider-vertical"></li>
+
                         <li><a href="{% url 'login' %}">Log in</a></li>
                         {% endif %}
+                    </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
