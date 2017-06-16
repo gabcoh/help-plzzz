@@ -19,14 +19,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='HelpRequest',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('topic', models.CharField(max_length=50)),
-                ('urgency', models.CharField(blank=True, choices=[('HIGH', 'H'), ('MEDIUM', 'M'), ('LOW', 'L')], max_length=1)),
-                ('pub_datetime', models.DateTimeField(auto_now=True, verbose_name='request time')),
+                ('urgency', models.CharField(blank=True, choices=[
+                 ('HIGH', 'H'), ('MEDIUM', 'M'), ('LOW', 'L')], max_length=1)),
+                ('pub_datetime', models.DateTimeField(
+                    auto_now=True, verbose_name='request time')),
                 ('public', models.BooleanField(default=True)),
                 ('started', models.BooleanField(default=False)),
                 ('request_teacher', models.BooleanField(default=False)),
-                ('creator', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('creator', models.ForeignKey(
+                    default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'permissions': (('can_add', 'Can create new help request'), ('can_concur', 'Can concur with a help request'), ('can_delete', 'Can delete a help request'), ('can_mark_started', 'Can mark help request as begun'), ('can_mark_done', 'Can mark help request as done'), ('can_view_private', 'Can view private request')),

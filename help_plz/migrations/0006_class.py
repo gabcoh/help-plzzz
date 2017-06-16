@@ -17,10 +17,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Class',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('students', models.ManyToManyField(related_name='students_set', to=settings.AUTH_USER_MODEL)),
-                ('teachers', models.ManyToManyField(related_name='teacher_set', to=settings.AUTH_USER_MODEL)),
-                ('tutors', models.ManyToManyField(related_name='tutor_set', to=settings.AUTH_USER_MODEL)),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('students', models.ManyToManyField(
+                    related_name='students_set', to=settings.AUTH_USER_MODEL)),
+                ('teachers', models.ManyToManyField(
+                    related_name='teacher_set', to=settings.AUTH_USER_MODEL)),
+                ('tutors', models.ManyToManyField(
+                    related_name='tutor_set', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

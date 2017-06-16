@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='class',
             name='name',
-            field=models.CharField(default='default_name', max_length=50, unique=True),
+            field=models.CharField(
+                default='default_name', max_length=50, unique=True),
         ),
     ]

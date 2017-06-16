@@ -87,6 +87,9 @@ def concur_with_request(request, pk):
 
 @login_required()
 def account(request, context=None):
+    context = {
+            'recent_requests':recent_requests(request.user)
+    }
     return render(request, 'help_plz/account.html', context)
 
 
@@ -145,6 +148,12 @@ def create_class(request):
         if not all(map(lambda field: field in request.POST, fields)):
             context = {
                 'error_message': 'Not all fields provided',
+                'recent_requests': recent_requests(request.user)
+            }
+            return render(request, "help_plz/account.html", context)
+        elif len(request.POST['create_class_name'].strip()) == 0:
+            context = {
+                'error_message': 'Name must not be blank',
                 'recent_requests': recent_requests(request.user)
             }
             return render(request, "help_plz/account.html", context)

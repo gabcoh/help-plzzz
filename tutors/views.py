@@ -8,20 +8,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.db.utils import IntegrityError
 
-#add help_plz:account and create user template
+# add help_plz:account and create user template
+
+
 def create_user(request):
     if request.method == "POST":
-        if not (all(map(lambda a: a in request.POST, ['password','username']))):
+        if not (all(map(lambda a: a in request.POST, ['password', 'username']))):
             context = {
-                    'error_message':'Post error',
+                'error_message': 'Post error',
             }
-            return render(request,'registration/create_user.html', context)
-        new_user = User(username=request.POST['username'], password=request.POST['password'])
+            return render(request, 'registration/create_user.html', context)
+        new_user = User(
+            username=request.POST['username'], password=request.POST['password'])
         try:
             new_user.save()
         except IntegrityError:
             context = {
-                    'error_message':'username already taken',
+                'error_message': 'username already taken',
             }
             return render(request, 'registration/create_user.html', context)
         login(request, user=new_user)

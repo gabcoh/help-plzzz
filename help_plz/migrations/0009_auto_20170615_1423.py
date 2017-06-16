@@ -17,21 +17,25 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='class',
             name='students',
-            field=models.ManyToManyField(related_name='class_set', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(
+                related_name='class_set', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='class',
             name='teachers',
-            field=models.ManyToManyField(related_name='teaching_set', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(
+                related_name='teaching_set', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='class',
             name='tutors',
-            field=models.ManyToManyField(related_name='tutoring_set', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(
+                related_name='tutoring_set', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='helprequest',
             name='klass',
-            field=models.ForeignKey(default=4, on_delete=django.db.models.deletion.CASCADE, to='help_plz.Class'),
+            field=models.ForeignKey(
+                default=4, on_delete=django.db.models.deletion.CASCADE, to='help_plz.Class'),
         ),
     ]

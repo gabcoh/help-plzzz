@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='helprequest',
-            options={'permissions': (('can_concur', 'Can concur with a help request'), ('can_mark_started', 'Can mark help request as begun'), ('can_mark_done', 'Can mark help request as done'), ('can_view_private', 'Can view private request'))},
+            options={'permissions': (('can_concur', 'Can concur with a help request'), ('can_mark_started', 'Can mark help request as begun'), (
+                'can_mark_done', 'Can mark help request as done'), ('can_view_private', 'Can view private request'))},
         ),
     ]

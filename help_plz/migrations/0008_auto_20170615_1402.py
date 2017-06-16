@@ -16,6 +16,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='helprequest',
             name='klass',
-            field=models.ForeignKey(default=37, on_delete=django.db.models.deletion.CASCADE, to='help_plz.Class'),
+            field=models.ForeignKey(
+                default=37, on_delete=django.db.models.deletion.CASCADE, to='help_plz.Class'),
         ),
     ]

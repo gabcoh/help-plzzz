@@ -102,8 +102,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 AUTHENTICATION_BACKENDS = (
-	'rules.permissions.ObjectPermissionBackend',
-	'django.contrib.auth.backends.ModelBackend',
+    'rules.permissions.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 # Redirect to project root after login
@@ -131,4 +131,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
