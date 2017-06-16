@@ -5,7 +5,7 @@ from django.views import generic
 from django.contrib.auth.decorators import permission_required, login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.db.utils import IntegrityError
 
 # add help_plz:account and create user template
@@ -59,4 +59,4 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect('help_plz:index')
+    return redirect('help_plz:account')
