@@ -124,8 +124,9 @@ class HelpRequest(models.Model):
     pub_datetime = models.DateTimeField('request time', auto_now=True)
     public = models.BooleanField(default=True)
     started = models.BooleanField(default=False)
+    helper = models.ForeignKey(User, related_name="helped", blank=True, null=True)
     request_teacher = models.BooleanField(default=False)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    creator = models.ForeignKey(User, related_name="created", on_delete=models.CASCADE, default=1)
     concurers = models.ManyToManyField(User, related_name="concurers")
 
     def __str__(self):

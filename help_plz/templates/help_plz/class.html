@@ -6,7 +6,10 @@
     <thead>
     <tr>
         <th >
-            Name
+            Requestor
+        </th>
+        <th>
+            Helper
         </th>
         <th >
             Subject
@@ -29,6 +32,9 @@
         >
         <td >
             {{ request.creator.username }}
+        </td>
+        <td>
+            {{ request.helper.username|default:'None' }}
         </td>
         <td >
             {{ request.topic }}

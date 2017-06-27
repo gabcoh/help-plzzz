@@ -61,6 +61,7 @@ def request_help(request, class_pk):
 def start_request(request, pk):
     request_object = get_object_or_404(HelpRequest, pk=pk)
     request_object.started = True
+    request_object.helper = request.user
     request_object.save()
     return redirect('help_plz:class', class_pk=request_object.klass.pk)
 
