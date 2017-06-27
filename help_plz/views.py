@@ -9,14 +9,11 @@ from django.shortcuts import get_object_or_404, redirect
 from django.db import IntegrityError
 from .models import HelpRequest, Class
 
-
 def recent_requests(user):
-    return HelpRequest.objects.filter(creator=user)
-# expects class_pk
-
+    return HelpRequest.objects.filter(creator=user).order_by('-pub_datetime')
 
 @permission_required('class.can_view', fn=objectgetter(Class, 'class_pk'))
-def get_index(request, class_pk):
+def get_class(request, class_pk):
     klass = get_object_or_404(Class, pk=class_pk)
     requests = HelpRequest.objects.filter(klass=Class.objects.get(pk=class_pk))
     if klass.can_view_private(request.user):
@@ -33,7 +30,7 @@ def get_index(request, class_pk):
     if request.user.has_perm('class.add_help_request'):
         context['urgency_choices'] = map(lambda x: x[0].title(),
                                          list(HelpRequest.URGENCY_CHOICES))
-    return render(request, 'help_plz/index.html', context)
+    return render(request, 'help_plz/class.html', context)
 
 
 @permission_required('help_request.delete_help_request',
@@ -42,7 +39,7 @@ def get_index(request, class_pk):
 def delete_request(request, pk):
     request_object = get_object_or_404(HelpRequest, pk=pk)
     request_object.delete()
-    return redirect('help_plz:index', class_pk=request_object.klass.pk)
+    return redirect('help_plz:class', class_pk=request_object.klass.pk)
 
 
 @require_http_methods("POST")
@@ -56,7 +53,7 @@ def request_help(request, class_pk):
     if 'urgency' in request.POST and request.POST['urgency'] != 'None':
         help_request.urgency = request.POST['urgency'].upper()
     help_request.save()
-    return redirect('help_plz:index', class_pk=help_request.klass.pk)
+    return redirect('help_plz:class', class_pk=help_request.klass.pk)
 
 
 @permission_required('help_request.can_mark_started',
@@ -65,7 +62,7 @@ def start_request(request, pk):
     request_object = get_object_or_404(HelpRequest, pk=pk)
     request_object.started = True
     request_object.save()
-    return redirect('help_plz:index', class_pk=request_object.klass.pk)
+    return redirect('help_plz:class', class_pk=request_object.klass.pk)
 
 
 @permission_required('help_request.can_mark_done', fn=objectgetter(HelpRequest,
@@ -73,7 +70,7 @@ def start_request(request, pk):
 def finish_request(request, pk):
     request_object = get_object_or_404(HelpRequest, pk=pk)
     request_object.delete()
-    return redirect('help_plz:index', class_pk=request_object.klass.pk)
+    return redirect('help_plz:class', class_pk=request_object.klass.pk)
 
 
 @login_required()
@@ -82,7 +79,7 @@ def finish_request(request, pk):
 def concur_with_request(request, pk):
     request_object = get_object_or_404(HelpRequest, pk=pk)
     request_object.concurers.add(request.user)
-    return redirect('help_plz:index', class_pk=request_object.klass.pk)
+    return redirect('help_plz:class', class_pk=request_object.klass.pk)
 
 
 @login_required()

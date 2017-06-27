@@ -12,7 +12,7 @@
     <ul id="classes_taking" class="list-group collapse">
         {% if user.class_set.all %}
         {% for klass in user.class_set.all %}
-        <a class="list-group-item" href={% url 'help_plz:index' klass.pk %}>{{ klass }}</a>
+        <a class="list-group-item" href={% url 'help_plz:class' klass.pk %}>{{ klass }}</a>
         {% endfor %}
         {% else %}
         <li class="list-group-item"> You aren't taking any classes</li>
@@ -29,7 +29,7 @@
     <ul id="classes_tutoring" class="list-group collapse">
         {% if user.tutoring_set.all %}
         {% for klass in user.tutoring_set.all %}
-        <a class="list-group-item" href={% url 'help_plz:index' klass.pk %}>{{ klass }}</a>
+        <a class="list-group-item" href={% url 'help_plz:class' klass.pk %}>{{ klass }}</a>
         {% endfor %}
         {% else %}
         <li class="list-group-item"> You aren't tutoring any classes</li>
@@ -46,7 +46,7 @@
     <ul id="classes_teaching" class="list-group collapse">
         {% if user.teaching_set.all %}
         {% for klass in user.teaching_set.all %}
-        <a class="list-group-item" href={% url 'help_plz:index' klass.pk %}>{{ klass }}</a>
+        <a class="list-group-item" href={% url 'help_plz:class' klass.pk %}>{{ klass }}</a>
         {% endfor %}
         {% else %}
         <li class="list-group-item"> You aren't teaching any classes</li>
@@ -59,7 +59,7 @@
         <h4> Recent requests </h4>
         <ul class="list-group">
         {% for request in recent_requests %}
-            <a class="list-group-item" href="{% url 'help_plz:index' request.klass.pk %}">{{request }}</a>
+            <a class="list-group-item" href="{% url 'help_plz:class' request.klass.pk %}">{{request }}</a>
         {% endfor %}.
         </ul>
         {% else %}

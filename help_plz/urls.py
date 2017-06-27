@@ -4,7 +4,7 @@ from . import views
 
 app_name = 'help_plz'
 urlpatterns = [
-    url(r'^(?P<class_pk>[0-9]+)$', views.get_index, name='index'),
+    url(r'^(?P<class_pk>[0-9]+)$', views.get_class, name='class'),
     url(r'^(?P<pk>[0-9]+)/start/$', views.start_request, name='start'),
     url(r'^(?P<pk>[0-9]+)/finish/$', views.finish_request, name='finish'),
     url(r'^(?P<pk>[0-9]+)/delete/$', views.delete_request, name='delete'),
