@@ -19,7 +19,8 @@ def create_user(request):
             }
             return render(request, 'registration/create_user.html', context)
         new_user = User(
-            username=request.POST['username'], password=request.POST['password'])
+            username=request.POST['username'])
+        new_user.set_password(request.POST['password'])
         try:
             new_user.save()
         except IntegrityError:
@@ -27,7 +28,14 @@ def create_user(request):
                 'error_message': 'username already taken',
             }
             return render(request, 'registration/create_user.html', context)
-        login(request, user=new_user)
+        new_user = authenticate(username=request.POST['username'],
+            password=request.POST['password'])
+        if new_user is None:
+            context = {
+                'error_message': 'internal server error',
+            }
+            return render(request, 'registration/create_user.html', context)
+        login(request, user=new_user, backend=new_user.backend)
         return redirect('help_plz:account')
     else:
         return render(request, 'registration/create_user.html', {})
