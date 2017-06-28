@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% load rules %}
+{% block script %}
+$(document).ready(function () {
+    var hash = window.location.hash;
+    $(hash).addClass('bg-warning');
+    console.log('hi');
+})
+{% endblock %}
 {% block content %}
 {% if requests_list %}
 <table class="table">
@@ -21,7 +28,7 @@
     </thead>
     <tbody>
     {% for request in requests_list %}
-    <tr class=
+    <tr id="{{request.pk}}"class=
     {% if request.started %} 
         "active"
     {% elif request.urgency == HelpRequest.HIGH.1 %} 
@@ -119,6 +126,11 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_request_modal">
     Request Help 
 </button>
+<a class="btn btn-default"
+    href="javascript:window.location.reload(true)">
+    Refresh 
+    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+</a>
 
 <!-- Modal -->
 <div class="modal fade" id="create_request_modal" tabindex="-1" role="dialog" aria-labelledby="create_request_modal_label">

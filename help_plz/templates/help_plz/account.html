@@ -59,7 +59,7 @@
         <h4> Recent requests </h4>
         <ul class="list-group">
         {% for request in recent_requests %}
-            <a class="list-group-item" href="{% url 'help_plz:class' request.klass.pk %}">{{request }}</a>
+            <a class="list-group-item" href="{% url 'help_plz:class' request.klass.pk %}#{{request.pk}}">{{request }}</a>
         {% endfor %}.
         </ul>
         {% else %}
